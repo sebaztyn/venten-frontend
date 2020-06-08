@@ -26,7 +26,7 @@ const Container = () => {
       setLoading(true);
       try {
         const data = {
-          url: `https://ven10.co/assessment/filter.json`,
+          url: `https://cors-anywhere.herokuapp.com/https://ven10.co/assessment/filter.json`,
           method: "GET",
         };
         const fetchResult = await fetch(data);
