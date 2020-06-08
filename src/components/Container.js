@@ -6,6 +6,7 @@ import Loading from "./Loading.js";
 
 const Container = () => {
   const [loading, setLoading] = useState(false);
+  const [dateError, setDateError] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
     start_year: 1990,
     end_year: 1990,
@@ -108,6 +109,9 @@ const Container = () => {
         allFilters={allFilters}
         setSelectedFilters={setSelectedFilters}
         filterHandler={filterHandler}
+        dateError={dateError}
+        setDateError={setDateError}
+        setLoading={setLoading}
       >
         <SearchResult
           selectedFilters={selectedFilters}

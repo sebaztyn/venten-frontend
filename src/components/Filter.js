@@ -11,6 +11,9 @@ const Filter = ({
   allFilters,
   children,
   filterHandler,
+  dateError,
+  setDateError,
+  setLoading,
 }) => {
   const [visible, setVisible] = useState(false);
   const hide = (visible) => setVisible(false);
@@ -38,6 +41,7 @@ const Filter = ({
   }
 
   const inputHandler = (value, option) => {
+    setDateError(false);
     let name = option.name;
     setSelectedFilters({
       ...selectedFilters,
@@ -45,12 +49,14 @@ const Filter = ({
     });
   };
   const colorHandler = (value) => {
+    setDateError(false);
     setSelectedFilters({
       ...selectedFilters,
       colors: value,
     });
   };
   const countryHandler = (value) => {
+    setDateError(false);
     setSelectedFilters({
       ...selectedFilters,
       countries: value,
@@ -113,7 +119,10 @@ const Filter = ({
             return;
           } else {
             return (
-              <div className="border border-black border-solid rounded-md p-2 mb-4">
+              <div
+                key={index}
+                className="border border-black border-solid rounded-md p-2 mb-4"
+              >
                 <label htmlFor="start_date" className="block mb-2 text-center">
                   Pick a Gender
                 </label>
@@ -173,11 +182,20 @@ const Filter = ({
         }
       })}
 
+      {dateError && (
+        <div className="text-red-500 italic text-center">
+          *Start-year cannot be greater than End-year
+        </div>
+      )}
       <Button
         className="uppercase mt-8"
         onClick={() => {
-          setVisible(false);
+          if (selectedFilters.end_year < selectedFilters.start_year) {
+            setLoading(false);
+            return setDateError(true);
+          }
           filterHandler();
+          if (!dateError) setVisible(false);
         }}
       >
         Apply Filters
